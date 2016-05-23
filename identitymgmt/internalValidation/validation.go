@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt"
+	"github.com/turnerlabs/identity/identitymgmt"
 )
 
 //NewSimpleIdentity -

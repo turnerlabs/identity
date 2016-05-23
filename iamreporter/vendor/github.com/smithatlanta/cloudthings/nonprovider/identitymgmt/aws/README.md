@@ -1,1 +1,0 @@
-AWS IAM implementation

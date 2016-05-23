@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt/aws"
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt/internalValidation"
+	"github.com/turnerlabs/identity/identitymgmt/aws"
+	"github.com/turnerlabs/identity/identitymgmt/internalValidation"
 )
 
 var url string

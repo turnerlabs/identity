@@ -8,8 +8,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt"
 	"github.com/stretchr/testify/assert"
+	"github.com/turnerlabs/identity/identitymgmt"
 )
 
 var url string

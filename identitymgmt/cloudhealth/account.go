@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt"
+	"github.com/turnerlabs/identity/identitymgmt"
 )
 
 var allAccounts []identitymgmt.BasicAccount
