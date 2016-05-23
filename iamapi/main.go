@@ -9,10 +9,10 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	"github.com/smithatlanta/cloudthings/nonprovider/iamapi/internalAccount"
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt/aws"
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt/cloudhealth"
-	"github.com/smithatlanta/cloudthings/nonprovider/identitymgmt/internalValidation"
+	"github.com/turnerlabs/identity/iamapi/internalAccount"
+	"github.com/turnerlabs/identity/identitymgmt/aws"
+	"github.com/turnerlabs/identity/identitymgmt/cloudhealth"
+	"github.com/turnerlabs/identity/identitymgmt/internalValidation"
 )
 
 //Users -
