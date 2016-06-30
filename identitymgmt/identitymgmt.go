@@ -64,6 +64,21 @@ type CloudhealthGroup struct {
 	Group string `json:"group"`
 }
 
+//ServiceLimit -
+type ServiceLimit struct {
+	Region      string
+	ServiceName string
+	ServiceItem string
+	Max         string
+	Current     string
+	Color       string
+}
+
+//Support -
+type Support interface {
+	ListServiceLevels(checkid string) ([]ServiceLimit, error)
+}
+
 //Identity -
 type Identity interface {
 	//CreateUser
