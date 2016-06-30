@@ -90,6 +90,7 @@ func main() {
 	router.HandleFunc("/chaccount/{id}", CloudhealthAccountIndex).Methods("GET")
 	router.HandleFunc("/awsaccount/all/{id}", AWSAllAccountIndex).Methods("GET")
 	router.HandleFunc("/awsaccount/invalid/{id}", AWSInvalidAccountIndex).Methods("GET")
+	router.HandleFunc("/awsaccount/svclimit/{id}", AWSServiceLimitIndex).Methods("GET")
 	router.HandleFunc("/intaccount/{id}", IntAccountGet).Methods("GET")
 	router.HandleFunc("/intaccount", IntAccountPut).Methods("PUT")
 	router.HandleFunc("/intaccount", IntAccountPost).Methods("POST")
@@ -205,6 +206,38 @@ func AWSInvalidAccountIndex(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		json.NewEncoder(w).Encode(userList)
+	}
+}
+
+// AWSServiceLimitIndex -
+func AWSServiceLimitIndex(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+
+	var accessKey *string
+	var secretKey *string
+	var sessionToken *string
+	var err error
+
+	//Assume Role in each account
+	sts := aws.NewRole(region, nil, nil, nil)
+	accessKey, secretKey, sessionToken, err = sts.AssumeRole("arn:aws:iam::"+id+":role/"+role, "IAMCHECKER")
+	if err != nil {
+		fmt.Println(err.Error())
+		var users []string
+		json.NewEncoder(w).Encode(users)
+	} else {
+		//AWS user scan showing name, groups
+		supportaws := aws.NewServiceLevels(region, accessKey, secretKey, sessionToken)
+		const checkid = "eW7HH0l7J9"
+		result, err := supportaws.ListServiceLevels(checkid)
+		if err != nil {
+			fmt.Println(err.Error())
+			var emptyusers []string
+			json.NewEncoder(w).Encode(emptyusers)
+		} else {
+			json.NewEncoder(w).Encode(result)
+		}
 	}
 }
 
