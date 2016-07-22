@@ -2,6 +2,7 @@ package aws
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -65,6 +66,19 @@ func (s *iamaws) DeleteUser(user string) error {
 		fmt.Println(err.Error())
 	}
 	return err
+}
+
+//EmailableUsers -
+func (s *iamaws) EmailableUsers() ([]string, error) {
+	users, err := s.ListUsers()
+
+	var emailableUsers []string
+	for i := 0; i < len(users); i++ {
+		if strings.Contains(users[i], "@") {
+			emailableUsers = append(emailableUsers, users[i])
+		}
+	}
+	return emailableUsers, err
 }
 
 //ListUsers -

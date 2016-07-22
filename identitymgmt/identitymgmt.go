@@ -85,6 +85,8 @@ type Identity interface {
 	DeleteUser(user string) error
 	//ListUsers
 	ListUsers() ([]string, error)
+	//EmailableUsers
+	EmailableUsers() ([]string, error)
 	//CreateGroup
 	CreateGroup(group string) error
 	//DeleteGroup

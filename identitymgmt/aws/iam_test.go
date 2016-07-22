@@ -49,6 +49,19 @@ func TestListUsers(t *testing.T) {
 		fmt.Println(err.Error())
 	}
 
+	fmt.Println(resp)
+	assert.Nil(t, err)
+	assert.NotEmpty(t, len(resp))
+}
+
+func TestEmailableUsers(t *testing.T) {
+	iamaws := NewIdentity(region, nil, nil, nil)
+	resp, err := iamaws.EmailableUsers()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	fmt.Println(resp)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, len(resp))
 }
