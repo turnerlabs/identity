@@ -1,10 +1,6 @@
 package identitymgmt
 
-//BasicAccount -
-type BasicAccount struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-}
+// Cloudhealth
 
 //CloudhealthAccount -
 type CloudhealthAccount struct {
@@ -64,6 +60,8 @@ type CloudhealthGroup struct {
 	Group string `json:"group"`
 }
 
+// AWS
+
 //ServiceLimit -
 type ServiceLimit struct {
 	Region      string
@@ -103,6 +101,26 @@ type Identity interface {
 	AddUserToGroup(user, group string) error
 	//RemoveUserFromGroup
 	RemoveUserFromGroup(user, group string) error
+}
+
+// Github
+
+//Membership -
+type Membership interface {
+	//Members
+	Members(org string) ([]GithubMember, error)
+}
+
+//GithubMember -
+type GithubMember struct {
+	Login string `json:"login"`
+	Type  string `json:"type"`
+}
+
+//BasicAccount -
+type BasicAccount struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 //SimpleIdentity -
