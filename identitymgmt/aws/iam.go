@@ -83,7 +83,10 @@ func (s *iamaws) EmailableUsers() ([]string, error) {
 
 //ListUsers -
 func (s *iamaws) ListUsers() ([]string, error) {
-	params := &iam.ListUsersInput{}
+	params := &iam.ListUsersInput{
+		MaxItems: aws.Int64(320),
+	}
+
 	resp, err := s.svc.ListUsers(params)
 
 	if err != nil {
