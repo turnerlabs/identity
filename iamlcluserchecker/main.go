@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"os"
 
@@ -9,16 +8,16 @@ import (
 	"github.com/turnerlabs/identity/identitymgmt/internalValidation"
 )
 
-var intURL string
-var intAuthKey string
-
-func init() {
-	flag.StringVar(&intURL, "intURL", "", "url is required(authorization endpoint)")
-	flag.StringVar(&intAuthKey, "intauthKey", "", "authKey is required(authorization key on header)")
-}
+// var intURL string
+// var intAuthKey string
+//
+// func init() {
+// 	flag.StringVar(&intURL, "intURL", "", "url is required(authorization endpoint)")
+// 	flag.StringVar(&intAuthKey, "intauthKey", "", "authKey is required(authorization key on header)")
+// }
 
 func main() {
-	flag.Parse()
+	//	flag.Parse()
 
 	var accessKey *string
 	var secretKey *string
@@ -49,6 +48,8 @@ func main() {
 			fmt.Println(err.Error())
 		}
 		var userList []string
+		var intURL string
+		var intAuthKey string
 
 		for a := 0; a < len(users); a++ {
 			internal := internalValidation.NewSimpleIdentity(intURL, intAuthKey)
