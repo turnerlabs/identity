@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/turnerlabs/identity",
+	"GoVersion": "go1.6",
+	"Deps": []
+}
