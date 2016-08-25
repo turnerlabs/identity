@@ -1,23 +1,30 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
 
 	"github.com/turnerlabs/identity/identitymgmt/aws"
 	"github.com/turnerlabs/identity/identitymgmt/internalValidation"
 )
 
-// var intURL string
-// var intAuthKey string
-//
-// func init() {
-// 	flag.StringVar(&intURL, "intURL", "", "url is required(authorization endpoint)")
-// 	flag.StringVar(&intAuthKey, "intauthKey", "", "authKey is required(authorization key on header)")
-// }
+var url string
+var authKey string
+var boolA *bool
+var boolC *bool
+var boolE *bool
+
+func init() {
+	boolA = flag.Bool("a", false, "to get all users based on the credentials key")
+	boolC = flag.Bool("c", false, "to get all the non active users based on the credentials key")
+	boolE = flag.Bool("e", false, "to get all the emailable users based on the credentials key")
+
+	flag.StringVar(&url, "url", "", "url is required(authorization endpoint)")
+	flag.StringVar(&authKey, "authKey", "", "authKey is required(authorization key on header)")
+}
 
 func main() {
-	//	flag.Parse()
+	flag.Parse()
 
 	var accessKey *string
 	var secretKey *string
@@ -26,41 +33,49 @@ func main() {
 
 	region = "us-east-1"
 
-	//AWS user scan showing name, groups
 	iam := aws.NewIdentity(region, accessKey, secretKey, sessionToken)
 
-	switch os.Args[1] {
-	case "-e":
+	if *boolE == true {
 		users, err := iam.EmailableUsers()
 		if err != nil {
 			fmt.Println(err.Error())
 		}
 		fmt.Println(users)
-	case "-a":
+	}
+
+	if *boolA == true {
 		users, err := iam.ListUsers()
 		if err != nil {
 			fmt.Println(err.Error())
 		}
 		fmt.Println(users)
-	case "-c":
+	}
+
+	if *boolC == true {
+		if url == "" {
+			fmt.Println("intURL - url is required(authorization endpoint)")
+			return
+		}
+
+		if authKey == "" {
+			fmt.Println("intAuthKey - authKey is required(authorization key on header)")
+			return
+		}
+
 		users, err := iam.ListUsers()
 		if err != nil {
 			fmt.Println(err.Error())
 		}
-		var userList []string
-		var intURL string
-		var intAuthKey string
 
 		for a := 0; a < len(users); a++ {
-			internal := internalValidation.NewSimpleIdentity(intURL, intAuthKey)
+			internal := internalValidation.NewSimpleIdentity(url, authKey)
 			isValid, err := internal.Validate(users[a])
 			if err != nil && err.Error() != "No records found" {
 				continue
 			}
 			if isValid == false {
-				userList = append(userList, users[a])
+				fmt.Println(users[a])
 			}
 		}
-
 	}
 }
